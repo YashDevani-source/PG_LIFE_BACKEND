@@ -7,8 +7,8 @@ import cookieParser from 'cookie-parser';
 
 // Routes
 
-import authRoutes from './routes/auth.routes.js';
-import propertyRoutes from './routes/Property.routes.js';
+import authRoutes from './scr/routes/auth.routes.js';
+import propertyRoutes from './scr/routes/property.routes.js';
 
 // Load environment variables from .env file
 
