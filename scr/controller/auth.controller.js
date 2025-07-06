@@ -57,10 +57,11 @@ export const register = async (req, res) => {
 
         // Set token in cookie
         res.cookie('token', token, {
-            httpOnly: true,      // Prevents JS access to the cookie (XSS protection)
-            secure: false,       // Set to true if using HTTPS
-            sameSite: "lax",     // CSRF protection
-            maxAge: 24 * 60 * 60 * 1000 // 1 day in milliseconds
+            httpOnly:true, 
+            secure:true, // required for cross-site cookies over HTTPS
+            sameSite: 'none', // required when frontend & backend are on different domains
+            maxAge: 24 * 60 * 60 * 1000,
+            path: '/' // Ensure the cookie is accessible across the application
         })
 
         // Return success response
@@ -117,8 +118,8 @@ export const login = async (req, res) => {
         // Set token in cookie
         res.cookie('token', token, {
             httpOnly:true, 
-            secure:false,
-            sameSite: 'lax',
+            secure:true, // required for cross-site cookies over HTTPS
+            sameSite: 'none', // required when frontend & backend are on different domains
             maxAge: 24 * 60 * 60 * 1000,
             path: '/' // Ensure the cookie is accessible across the application
         })
@@ -149,10 +150,11 @@ export const login = async (req, res) => {
 export const logout = async (req, res) => {
     try {
         res.clearCookie('token', {
-            httpOnly:true, 
-            secure:false,
-            sameSite: 'lax',
-            maxAge: 24 * 60 * 60 * 1000
+           httpOnly:true, 
+            secure:true, // required for cross-site cookies over HTTPS
+            sameSite: 'none', // required when frontend & backend are on different domains
+            maxAge: 24 * 60 * 60 * 1000,
+            path: '/' // Ensure the cookie is accessible across the application
         });
         res.status(200).json({ message: 'Logout successful' });
     } catch (error) {
